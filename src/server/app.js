@@ -5,8 +5,10 @@ var cors = require("cors");
 var express = require("express");
 var error_middleware_1 = require("./middleware/error.middleware");
 var routes_1 = require("./routes/routes");
+var Logger_1 = require("./logger/Logger");
 var App = /** @class */ (function () {
     function App(port) {
+        this.logger = Logger_1.SingletonLogger.getInstance();
         this.app = express();
         this.port = port;
         this.initializeMiddlewares();
@@ -39,7 +41,7 @@ var App = /** @class */ (function () {
     App.prototype.listen = function () {
         var _this = this;
         this.app.listen(this.port, function () {
-            console.log("Express running on port " + _this.port);
+            _this.logger.log("Express running on port " + _this.port);
         });
     };
     return App;

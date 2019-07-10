@@ -1,17 +1,17 @@
 "use strict";
 exports.__esModule = true;
-var Logger = /** @class */ (function () {
-    function Logger() {
+var log4js_1 = require("log4js");
+var SingletonLogger = /** @class */ (function () {
+    function SingletonLogger() {
     }
-    Logger.prototype.info = function (logText) {
-        console.log(new Date() + 'info:::::' + logText);
+    SingletonLogger.getInstance = function () {
+        if (!SingletonLogger.instance) {
+            log4js_1.configure(SingletonLogger.CONFIG_PATH);
+            SingletonLogger.instance = log4js_1.getLogger('production');
+        }
+        return SingletonLogger.instance;
     };
-    Logger.prototype.debug = function (logText) {
-        console.log(new Date() + 'debug:::::' + logText);
-    };
-    Logger.prototype.error = function (logText) {
-        console.log(new Date() + 'error:::::' + logText);
-    };
-    return Logger;
+    SingletonLogger.CONFIG_PATH = './src/server/config/log4js.json';
+    return SingletonLogger;
 }());
-exports.Logger = Logger;
+exports.SingletonLogger = SingletonLogger;

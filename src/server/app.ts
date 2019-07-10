@@ -3,8 +3,10 @@ import * as cors from 'cors';
 import * as express from 'express';
 import errorMiddleware from './middleware/error.middleware';
 import Routes from './routes/routes';
+import getLogger from './logger/Logger';
 
 class App {
+  private static logger = getLogger();
   private app: express.Application;
   private port: number;
 
@@ -46,7 +48,7 @@ class App {
   // start listening
   public listen() {
     this.app.listen(this.port, () => {
-      console.log(`Express running on port ${this.port}`);
+      App.logger.log(`Express running on port ${this.port}`);
     });
   }
 }

@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { Logger } from '../logger/Logger';
+import getLogger from '../logger/Logger';
 
 class UserController {
   public router: express.Router;
@@ -8,11 +8,10 @@ class UserController {
   public users = [
     { firstName: 'fnam1', lastName: 'lnam1', userName: 'username1' },
   ];
-  private logger: Logger;
+  private logger = getLogger();
 
   constructor() {
     this.router = express.Router();
-    this.logger = new Logger();
     this.routes();
   }
 

@@ -8,8 +8,8 @@ var UserController = /** @class */ (function () {
         this.users = [
             { firstName: 'fnam1', lastName: 'lnam1', userName: 'username1' },
         ];
+        this.logger = Logger_1.SingletonLogger.getInstance();
         this.router = express.Router();
-        this.logger = new Logger_1.Logger();
         this.routes();
     }
     UserController.prototype.routes = function () {

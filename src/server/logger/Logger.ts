@@ -1,13 +1,16 @@
-export class Logger {
-  public info(logText: string): void {
-    console.log(new Date() + 'info:::::' + logText);
-  }
+import { configure, getLogger as getLog4jsLogger, Logger } from 'log4js';
 
-  public debug(logText: string): void {
-    console.log(new Date() + 'debug:::::' + logText);
-  }
+class SingletonLogger {
+  private static readonly CONFIG_PATH = './src/server/config/log4js.json';
+  private static instance: Logger;
 
-  public error(logText: string): void {
-    console.log(new Date() + 'error:::::' + logText);
+  static getLogger(): Logger {
+    if (!SingletonLogger.instance) {
+      configure(SingletonLogger.CONFIG_PATH);
+      SingletonLogger.instance = getLog4jsLogger('production');
+    }
+    return SingletonLogger.instance;
   }
 }
+
+export default SingletonLogger.getLogger;
