@@ -4,5 +4,6 @@ Example of a nodejs api project with typescript
 
 ## TODO
 
-- Add api documentation support using Swagger or similar
-- Add a login controller using JWT
+- [x] Add logging using Log4js <https://www.npmjs.com/package/log4js>
+- [ ] Add api documentation support using Swagger or similar
+- [ ] Add a login controller using JWT
