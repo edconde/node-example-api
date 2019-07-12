@@ -1,43 +1,84 @@
 import * as express from 'express';
-import getLogger from '../logger/Logger';
+import AppLogger from '../logger/Logger';
+import { IUser } from '../models';
+import { userService } from '../services';
+import { IBaseController } from './base.controller';
 
-class UserController {
-  public router: express.Router;
+export class UserController implements IBaseController {
+  public constructor() {}
 
-  // array to hold users
-  public users = [
-    { firstName: 'fnam1', lastName: 'lnam1', userName: 'username1' },
-  ];
-  private logger = getLogger();
-
-  constructor() {
-    this.router = express.Router();
-    this.routes();
+  /**
+   * Consultar todos los usuarios
+   * @param _req petición
+   * @param _res respuesta
+   */
+  public async get(
+    _req: express.Request,
+    _res: express.Response
+  ): Promise<void> {
+    try {
+      let users: IUser[];
+      await userService
+        .findAll()
+        .then((data: IUser[]) => {
+          users = data;
+          _res.json(users);
+        })
+        .catch((error: Error) => {
+          AppLogger.error(error);
+        });
+    } catch (exception) {
+      AppLogger.error(exception);
+    }
   }
-
-  private routes(): void {
-    // request to get all the users
-    this.router.get('/', (req, res) => {
-      this.logger.info('users route');
-      res.json(this.users);
-    });
-
-    // request to get all the users by userName
-    this.router.get('/:userName', (req, res) => {
-      this.logger.info(`filter users by username:::::${req.params.userName}`);
-      const user = this.users.filter(
-        usr => req.params.userName === usr.userName
-      );
-      res.json(user);
-    });
-
-    // request to post the user
-    // req.body has object of type {firstName:"fnam1",lastName:"lnam1",userName:"username1"}
-    this.router.post('/', (req, res) => {
-      this.users.push(req.body);
-      res.json(this.users);
-    });
+  /**
+   * Consultar un usuario por id
+   * @param req petición
+   * @param res respuesta
+   */
+  public async getById(
+    _req: express.Request,
+    _res: express.Response
+  ): Promise<void> {
+    try {
+      const id = _req.params.id;
+      await userService
+        .findById(id)
+        .then((data: IUser) => {
+          _res.json(data);
+        })
+        .catch((error: Error) => {
+          AppLogger.error(error);
+        });
+    } catch (exception) {
+      AppLogger.error(exception);
+    }
+  }
+  // req.body has object of type {firstName:"fnam1",lastName:"lnam1",userName:"username1"}
+  /**
+   * Crear un usuario
+   * @param req petición
+   * @param res respuesta
+   */
+  public async post(_req: express.Request, _res: express.Response) {
+    // TODO
+  }
+  // req.body has object of type {firstName:"fnam1",lastName:"lnam1",userName:"username1"}
+  /**
+   * Modificar un usuario
+   * @param req petición
+   * @param res respuesta
+   */
+  public async put(_req: express.Request, _res: express.Response) {
+    // TODO
+  }
+  /**
+   * Eliminar un usuario por id
+   * @param req petición
+   * @param res respuesta
+   */
+  public async delete(_req: express.Request, _res: express.Response) {
+    AppLogger.info(_req.query.id);
+    // TODO
   }
 }
-
-export default new UserController().router;

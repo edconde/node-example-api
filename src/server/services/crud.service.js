@@ -35,114 +35,99 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var Logger_1 = require("../logger/Logger");
-var services_1 = require("../services");
-var UserController = /** @class */ (function () {
-    function UserController() {
+var mongoose = require("mongoose");
+/**
+ * Clase con los métodos CRUD básicos para ser extendida
+ */
+var CrudService = /** @class */ (function () {
+    function CrudService(model) {
+        this.model = model;
     }
     /**
-     * Consultar todos los usuarios
-     * @param _req petición
-     * @param _res respuesta
+     * Busca todos los documentos de un modelo <T>
      */
-    UserController.prototype.get = function (_req, _res) {
+    CrudService.prototype.findAll = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var users_1, exception_1;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, services_1.userService
-                                .findAll()
-                                .then(function (data) {
-                                users_1 = data;
-                                _res.json(users_1);
-                            })["catch"](function (error) {
-                                Logger_1["default"].error(error);
-                            })];
-                    case 1:
-                        _a.sent();
-                        return [3 /*break*/, 3];
-                    case 2:
-                        exception_1 = _a.sent();
-                        Logger_1["default"].error(exception_1);
-                        return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/];
-                }
+                return [2 /*return*/, this.model
+                        .find()
+                        .then(function (data) {
+                        return data;
+                    })["catch"](function (error) {
+                        throw error;
+                    })];
             });
         });
     };
     /**
-     * Consultar un usuario por id
-     * @param req petición
-     * @param res respuesta
+     *
+     * @param id el id del documento de tipo <T> a buscar
      */
-    UserController.prototype.getById = function (_req, _res) {
-        return __awaiter(this, void 0, void 0, function () {
-            var id, exception_2;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        id = _req.params.id;
-                        return [4 /*yield*/, services_1.userService
-                                .findById(id)
-                                .then(function (data) {
-                                _res.json(data);
-                            })["catch"](function (error) {
-                                Logger_1["default"].error(error);
-                            })];
-                    case 1:
-                        _a.sent();
-                        return [3 /*break*/, 3];
-                    case 2:
-                        exception_2 = _a.sent();
-                        Logger_1["default"].error(exception_2);
-                        return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/];
-                }
-            });
-        });
-    };
-    // req.body has object of type {firstName:"fnam1",lastName:"lnam1",userName:"username1"}
-    /**
-     * Crear un usuario
-     * @param req petición
-     * @param res respuesta
-     */
-    UserController.prototype.post = function (_req, _res) {
+    CrudService.prototype.findById = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/];
-            });
-        });
-    };
-    // req.body has object of type {firstName:"fnam1",lastName:"lnam1",userName:"username1"}
-    /**
-     * Modificar un usuario
-     * @param req petición
-     * @param res respuesta
-     */
-    UserController.prototype.put = function (_req, _res) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                return [2 /*return*/];
+                return [2 /*return*/, this.model
+                        .findById(new mongoose.Types.ObjectId(id))
+                        .then(function (data) {
+                        return data;
+                    })["catch"](function (error) {
+                        throw error;
+                    })];
             });
         });
     };
     /**
-     * Eliminar un usuario por id
-     * @param req petición
-     * @param res respuesta
+     * Inserta un documento
+     * @param body el documento a insertar
      */
-    UserController.prototype["delete"] = function (_req, _res) {
+    CrudService.prototype.addOne = function (body) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                Logger_1["default"].info(_req.query.id);
-                return [2 /*return*/];
+                return [2 /*return*/, this.model
+                        .create(body)
+                        .then(function (data) {
+                        return data;
+                    })["catch"](function (error) {
+                        throw error;
+                    })];
             });
         });
     };
-    return UserController;
+    /**
+     * Inserta un documento
+     * @param conditions las condiciones a cumplir por los documentos que serán modificados
+     * @param doc el documento a modificar
+     */
+    CrudService.prototype.updateOne = function (conditions, doc) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, this.model
+                        .updateOne(conditions, doc)
+                        .then(function (data) {
+                        return data;
+                    })["catch"](function (error) {
+                        throw error;
+                    })];
+            });
+        });
+    };
+    /**
+     * Elimina un documento
+     * @param id el id del documento de tipo <T> a eliminar
+     */
+    CrudService.prototype.deleteById = function (id) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, this.model
+                        .deleteOne({ _id: new mongoose.Types.ObjectId(id) })
+                        .then(function (data) {
+                        return data;
+                    })["catch"](function (error) {
+                        throw error;
+                    })];
+            });
+        });
+    };
+    return CrudService;
 }());
-exports.UserController = UserController;
+exports["default"] = CrudService;

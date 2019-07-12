@@ -1,17 +1,17 @@
 "use strict";
 exports.__esModule = true;
 var log4js_1 = require("log4js");
-var SingletonLogger = /** @class */ (function () {
-    function SingletonLogger() {
+var AppLogger = /** @class */ (function () {
+    function AppLogger() {
     }
-    SingletonLogger.getInstance = function () {
-        if (!SingletonLogger.instance) {
-            log4js_1.configure(SingletonLogger.CONFIG_PATH);
-            SingletonLogger.instance = log4js_1.getLogger('production');
+    AppLogger.getInstance = function () {
+        if (!AppLogger.instance) {
+            log4js_1.configure(AppLogger.CONFIG_PATH);
+            AppLogger.instance = log4js_1.getLogger();
         }
-        return SingletonLogger.instance;
+        return AppLogger.instance;
     };
-    SingletonLogger.CONFIG_PATH = './src/server/config/log4js.json';
-    return SingletonLogger;
+    AppLogger.CONFIG_PATH = './src/server/config/log4js.json';
+    return AppLogger;
 }());
-exports.SingletonLogger = SingletonLogger;
+exports["default"] = AppLogger.getInstance();

@@ -1,16 +1,30 @@
 "use strict";
 exports.__esModule = true;
 var express = require("express");
-var user_controller_1 = require("../controllers/user.controller");
+var _1 = require(".");
+/**
+ * Clase que genera el enrutado de la aplicación
+ */
 var Routes = /** @class */ (function () {
     function Routes() {
-        this.app = express();
-        this.routes();
     }
-    Routes.prototype.routes = function () {
-        // users resource route
-        this.app.use('/users', user_controller_1["default"]);
+    /**
+     * Devuelve una instancia singleton del enrutado de la aplicación
+     */
+    Routes.getRoutes = function () {
+        if (!Routes.app) {
+            Routes.app = express();
+            Routes.routes();
+        }
+        return Routes.app;
+    };
+    /**
+     * Asocia los endpoint base de cada módulo con su enrutador
+     */
+    Routes.routes = function () {
+        // ruta del recurso usuarios
+        Routes.app.use('/users', _1.UserRouter.getRouting());
     };
     return Routes;
 }());
-exports["default"] = new Routes().app;
+exports.Routes = Routes;

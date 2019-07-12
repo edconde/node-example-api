@@ -1,12 +1,11 @@
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import * as express from 'express';
-import errorMiddleware from './middleware/error.middleware';
-import Routes from './routes/routes';
-import getLogger from './logger/Logger';
+import { errorMiddleware } from './middleware';
+import { Routes } from './routes';
+import { AppLogger } from './logger';
 
 class App {
-  private static logger = getLogger();
   private app: express.Application;
   private port: number;
 
@@ -37,7 +36,7 @@ class App {
     });
 
     // api routing
-    this.app.use('/api', Routes);
+    this.app.use('/api', Routes.getRoutes());
 
     // handle undefined routes
     this.app.use('*', (req, res, next) => {
@@ -48,7 +47,7 @@ class App {
   // start listening
   public listen() {
     this.app.listen(this.port, () => {
-      App.logger.log(`Express running on port ${this.port}`);
+      AppLogger.log(`Express running on port ${this.port}`);
     });
   }
 }

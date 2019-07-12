@@ -3,12 +3,11 @@ exports.__esModule = true;
 var bodyParser = require("body-parser");
 var cors = require("cors");
 var express = require("express");
-var error_middleware_1 = require("./middleware/error.middleware");
-var routes_1 = require("./routes/routes");
-var Logger_1 = require("./logger/Logger");
+var middleware_1 = require("./middleware");
+var routes_1 = require("./routes");
+var logger_1 = require("./logger");
 var App = /** @class */ (function () {
     function App(port) {
-        this.logger = Logger_1.SingletonLogger.getInstance();
         this.app = express();
         this.port = port;
         this.initializeMiddlewares();
@@ -23,7 +22,7 @@ var App = /** @class */ (function () {
         this.app.use(cors());
         this.app.options('*', cors());
         // error handler
-        this.app.use(error_middleware_1["default"]);
+        this.app.use(middleware_1.errorMiddleware);
     };
     App.prototype.initializeRouting = function () {
         // test api
@@ -31,7 +30,7 @@ var App = /** @class */ (function () {
             res.send('Typescript App works!!');
         });
         // api routing
-        this.app.use('/api', routes_1["default"]);
+        this.app.use('/api', routes_1.Routes.getRoutes());
         // handle undefined routes
         this.app.use('*', function (req, res, next) {
             res.send('Make sure url is correct!!!');
@@ -41,7 +40,7 @@ var App = /** @class */ (function () {
     App.prototype.listen = function () {
         var _this = this;
         this.app.listen(this.port, function () {
-            _this.logger.log("Express running on port " + _this.port);
+            logger_1.AppLogger.log("Express running on port " + _this.port);
         });
     };
     return App;

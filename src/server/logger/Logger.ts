@@ -1,16 +1,18 @@
 import { configure, getLogger as getLog4jsLogger, Logger } from 'log4js';
 
-class SingletonLogger {
+class AppLogger {
+  private constructor() {}
+
   private static readonly CONFIG_PATH = './src/server/config/log4js.json';
   private static instance: Logger;
 
-  static getLogger(): Logger {
-    if (!SingletonLogger.instance) {
-      configure(SingletonLogger.CONFIG_PATH);
-      SingletonLogger.instance = getLog4jsLogger('production');
+  static getInstance(): Logger {
+    if (!AppLogger.instance) {
+      configure(AppLogger.CONFIG_PATH);
+      AppLogger.instance = getLog4jsLogger();
     }
-    return SingletonLogger.instance;
+    return AppLogger.instance;
   }
 }
 
-export default SingletonLogger.getLogger;
+export default AppLogger.getInstance();

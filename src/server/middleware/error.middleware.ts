@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-function errorMiddleware(
+export function errorMiddleware(
   err: Error,
   req: Request,
   res: Response,
@@ -9,5 +9,3 @@ function errorMiddleware(
   res.status(500);
   res.json({ message: err.name + ': ' + err.message });
 }
-
-export default errorMiddleware;

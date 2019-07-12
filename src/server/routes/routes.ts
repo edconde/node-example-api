@@ -1,18 +1,30 @@
 import * as express from 'express';
-import UserController from '../controllers/user.controller';
+import { UserRouter } from '.';
 
-class Routes {
-  public app: express.Application;
+/**
+ * Clase que genera el enrutado de la aplicación
+ */
+export class Routes {
+  private static app: express.Application;
 
-  constructor() {
-    this.app = express();
-    this.routes();
+  private constructor() {}
+
+  /**
+   * Devuelve una instancia singleton del enrutado de la aplicación
+   */
+  public static getRoutes(): express.Application {
+    if (!Routes.app) {
+      Routes.app = express();
+      Routes.routes();
+    }
+    return Routes.app;
   }
 
-  private routes(): void {
-    // users resource route
-    this.app.use('/users', UserController);
+  /**
+   * Asocia los endpoint base de cada módulo con su enrutador
+   */
+  private static routes(): void {
+    // ruta del recurso usuarios
+    Routes.app.use('/users', UserRouter.getRouting());
   }
 }
-
-export default new Routes().app;

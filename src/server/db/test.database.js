@@ -14,14 +14,13 @@ var TestDB = /** @class */ (function () {
     TestDB.prototype.connect = function () {
         mongoose.connect(TestDB.DATABASE_URI, { useNewUrlParser: true });
         mongoose.connection.once('open', function () {
-            TestDB.logger.warn('Connected to Mongo via Mongoose');
+            Logger_1["default"].info('Connected to Mongo via Mongoose');
         });
         mongoose.connection.on('error', function (err) {
-            TestDB.logger.error('Unable to connect to Mongo via Mongoose', err);
+            Logger_1["default"].error('Unable to connect to Mongo via Mongoose', err);
         });
     };
     TestDB.DATABASE_URI = 'mongodb://localhost:27017/test-db';
-    TestDB.logger = Logger_1.SingletonLogger.getInstance();
     return TestDB;
 }());
-exports["default"] = TestDB;
+exports["default"] = TestDB.getInstance();
