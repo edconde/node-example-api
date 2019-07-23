@@ -1,5 +1,5 @@
 import * as express from 'express';
-import AppLogger from '../logger/Logger';
+import { AppLogger } from '../logger';
 import { IUser } from '../models';
 import { userService } from '../services';
 import { IBaseController } from './base.controller';
@@ -61,7 +61,19 @@ export class UserController implements IBaseController {
    * @param res respuesta
    */
   public async post(_req: express.Request, _res: express.Response) {
-    // TODO
+    try {
+      const user = _req.body;
+      await userService
+        .addOne(user)
+        .then((data: IUser) => {
+          _res.json(data);
+        })
+        .catch((error: Error) => {
+          AppLogger.error(error);
+        });
+    } catch (exception) {
+      AppLogger.error(exception);
+    }
   }
   // req.body has object of type {firstName:"fnam1",lastName:"lnam1",userName:"username1"}
   /**
@@ -70,7 +82,22 @@ export class UserController implements IBaseController {
    * @param res respuesta
    */
   public async put(_req: express.Request, _res: express.Response) {
-    // TODO
+    try {
+      const conditions = {
+        _id: _req.params.id,
+      };
+      const user = _req.body;
+      await userService
+        .updateOne(conditions, user)
+        .then((data: IUser) => {
+          _res.json(data);
+        })
+        .catch((error: Error) => {
+          AppLogger.error(error);
+        });
+    } catch (exception) {
+      AppLogger.error(exception);
+    }
   }
   /**
    * Eliminar un usuario por id
@@ -78,7 +105,18 @@ export class UserController implements IBaseController {
    * @param res respuesta
    */
   public async delete(_req: express.Request, _res: express.Response) {
-    AppLogger.info(_req.query.id);
-    // TODO
+    try {
+      const id = _req.params.id;
+      await userService
+        .deleteById(id)
+        .then((data: IUser) => {
+          _res.json(data);
+        })
+        .catch((error: Error) => {
+          AppLogger.error(error);
+        });
+    } catch (exception) {
+      AppLogger.error(exception);
+    }
   }
 }

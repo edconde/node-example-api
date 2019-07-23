@@ -1,7 +1,8 @@
 "use strict";
 exports.__esModule = true;
 var mongoose = require("mongoose");
-var Logger_1 = require("../logger/Logger");
+var logger_1 = require("../logger");
+var environment_1 = require("../environment");
 var TestDB = /** @class */ (function () {
     function TestDB() {
     }
@@ -12,15 +13,18 @@ var TestDB = /** @class */ (function () {
         return TestDB.instance;
     };
     TestDB.prototype.connect = function () {
-        mongoose.connect(TestDB.DATABASE_URI, { useNewUrlParser: true });
+        logger_1.AppLogger.info(TestDB.DATABASE_URI);
+        mongoose.connect(TestDB.DATABASE_URI, {
+            useNewUrlParser: true
+        });
         mongoose.connection.once('open', function () {
-            Logger_1["default"].info('Connected to Mongo via Mongoose');
+            logger_1.AppLogger.info('Connected to Mongo via Mongoose');
         });
         mongoose.connection.on('error', function (err) {
-            Logger_1["default"].error('Unable to connect to Mongo via Mongoose', err);
+            logger_1.AppLogger.error('Unable to connect to Mongo via Mongoose', err);
         });
     };
-    TestDB.DATABASE_URI = 'mongodb://localhost:27017/test-db';
+    TestDB.DATABASE_URI = "mongodb://localhost:27017/" + environment_1.ENVIRONMENT['TEST_DATABASE_NAME'];
     return TestDB;
 }());
 exports["default"] = TestDB.getInstance();

@@ -1,8 +1,11 @@
 import * as mongoose from 'mongoose';
-import AppLogger from '../logger/Logger';
+import { AppLogger } from '../logger';
+import { ENVIRONMENT } from '../environment';
 
 class TestDB {
-  private static readonly DATABASE_URI = 'mongodb://localhost:27017/test-db';
+  private static readonly DATABASE_URI = `mongodb://localhost:27017/${
+    ENVIRONMENT['TEST_DATABASE_NAME']
+  }`;
   private static instance: TestDB;
 
   private constructor() {}
@@ -15,7 +18,10 @@ class TestDB {
   }
 
   public connect() {
-    mongoose.connect(TestDB.DATABASE_URI, { useNewUrlParser: true });
+    AppLogger.info(TestDB.DATABASE_URI);
+    mongoose.connect(TestDB.DATABASE_URI, {
+      useNewUrlParser: true,
+    });
     mongoose.connection.once('open', () => {
       AppLogger.info('Connected to Mongo via Mongoose');
     });

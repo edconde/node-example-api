@@ -1,0 +1,5 @@
+{
+  "ENVIRONMENT_NAME": "development",
+  "LOGGER_CATEGORY": "development",
+  "TEST_DATABASE_NAME": "TEST_DB_DEV"
+}

@@ -1,0 +1,5 @@
+{
+  "ENVIRONMENT_NAME": "production",
+  "LOGGER_CATEGORY": "production",
+  "TEST_DATABASE_NAME": "TEST_DB_PRO"
+}

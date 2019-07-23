@@ -35,7 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var Logger_1 = require("../logger/Logger");
+var logger_1 = require("../logger");
 var services_1 = require("../services");
 var UserController = /** @class */ (function () {
     function UserController() {
@@ -58,14 +58,14 @@ var UserController = /** @class */ (function () {
                                 users_1 = data;
                                 _res.json(users_1);
                             })["catch"](function (error) {
-                                Logger_1["default"].error(error);
+                                logger_1.AppLogger.error(error);
                             })];
                     case 1:
                         _a.sent();
                         return [3 /*break*/, 3];
                     case 2:
                         exception_1 = _a.sent();
-                        Logger_1["default"].error(exception_1);
+                        logger_1.AppLogger.error(exception_1);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -90,14 +90,14 @@ var UserController = /** @class */ (function () {
                                 .then(function (data) {
                                 _res.json(data);
                             })["catch"](function (error) {
-                                Logger_1["default"].error(error);
+                                logger_1.AppLogger.error(error);
                             })];
                     case 1:
                         _a.sent();
                         return [3 /*break*/, 3];
                     case 2:
                         exception_2 = _a.sent();
-                        Logger_1["default"].error(exception_2);
+                        logger_1.AppLogger.error(exception_2);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -112,8 +112,28 @@ var UserController = /** @class */ (function () {
      */
     UserController.prototype.post = function (_req, _res) {
         return __awaiter(this, void 0, void 0, function () {
+            var user, exception_3;
             return __generator(this, function (_a) {
-                return [2 /*return*/];
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        user = _req.body;
+                        return [4 /*yield*/, services_1.userService
+                                .addOne(user)
+                                .then(function (data) {
+                                _res.json(data);
+                            })["catch"](function (error) {
+                                logger_1.AppLogger.error(error);
+                            })];
+                    case 1:
+                        _a.sent();
+                        return [3 /*break*/, 3];
+                    case 2:
+                        exception_3 = _a.sent();
+                        logger_1.AppLogger.error(exception_3);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
             });
         });
     };
@@ -125,8 +145,31 @@ var UserController = /** @class */ (function () {
      */
     UserController.prototype.put = function (_req, _res) {
         return __awaiter(this, void 0, void 0, function () {
+            var conditions, user, exception_4;
             return __generator(this, function (_a) {
-                return [2 /*return*/];
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        conditions = {
+                            _id: _req.params.id
+                        };
+                        user = _req.body;
+                        return [4 /*yield*/, services_1.userService
+                                .updateOne(conditions, user)
+                                .then(function (data) {
+                                _res.json(data);
+                            })["catch"](function (error) {
+                                logger_1.AppLogger.error(error);
+                            })];
+                    case 1:
+                        _a.sent();
+                        return [3 /*break*/, 3];
+                    case 2:
+                        exception_4 = _a.sent();
+                        logger_1.AppLogger.error(exception_4);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
             });
         });
     };
@@ -137,9 +180,28 @@ var UserController = /** @class */ (function () {
      */
     UserController.prototype["delete"] = function (_req, _res) {
         return __awaiter(this, void 0, void 0, function () {
+            var id, exception_5;
             return __generator(this, function (_a) {
-                Logger_1["default"].info(_req.query.id);
-                return [2 /*return*/];
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        id = _req.params.id;
+                        return [4 /*yield*/, services_1.userService
+                                .deleteById(id)
+                                .then(function (data) {
+                                _res.json(data);
+                            })["catch"](function (error) {
+                                logger_1.AppLogger.error(error);
+                            })];
+                    case 1:
+                        _a.sent();
+                        return [3 /*break*/, 3];
+                    case 2:
+                        exception_5 = _a.sent();
+                        logger_1.AppLogger.error(exception_5);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
             });
         });
     };
