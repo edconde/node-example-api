@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/",
     "sourceMap": true,
     "noImplicitAny": true,
     "module": "commonjs",
@@ -8,5 +7,5 @@
     "allowJs": true,
     "resolveJsonModule": true
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "dist"]
 }

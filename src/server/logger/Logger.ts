@@ -1,6 +1,10 @@
 import { configure, getLogger as getLog4jsLogger, Logger } from 'log4js';
 import { ENVIRONMENT } from '../environment';
 
+/**
+ * Clase que almacena un logger (singleton) de log4js para la aplicación,
+ * configurado según el entorno (development/production).
+ */
 class AppLogger {
   private constructor() {}
 

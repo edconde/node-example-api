@@ -75,7 +75,6 @@ export class UserController implements IBaseController {
       AppLogger.error(exception);
     }
   }
-  // req.body has object of type {firstName:"fnam1",lastName:"lnam1",userName:"username1"}
   /**
    * Modificar un usuario
    * @param req petición

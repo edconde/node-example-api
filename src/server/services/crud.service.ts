@@ -48,7 +48,7 @@ export default abstract class CrudService<T> {
       });
   }
   /**
-   * Inserta un documento
+   * Modifica un documento
    * @param conditions las condiciones a cumplir por los documentos que serán modificados
    * @param doc el documento a modificar
    */
