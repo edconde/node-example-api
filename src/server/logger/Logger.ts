@@ -4,7 +4,8 @@ import { ENVIRONMENT } from '../environment';
 class AppLogger {
   private constructor() {}
 
-  private static readonly CONFIG_PATH = './src/server/config/logs/log4js.json';
+  private static readonly CONFIG_PATH =
+    './src/server/config/logger/log4js.json';
   private static instance: Logger;
 
   static getInstance(): Logger {

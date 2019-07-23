@@ -12,7 +12,7 @@ var AppLogger = /** @class */ (function () {
         }
         return AppLogger.instance;
     };
-    AppLogger.CONFIG_PATH = './src/server/config/logs/log4js.json';
+    AppLogger.CONFIG_PATH = './src/server/config/logger/log4js.json';
     return AppLogger;
 }());
 exports["default"] = AppLogger.getInstance();
