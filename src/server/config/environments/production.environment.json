@@ -1,5 +1,6 @@
 {
   "ENVIRONMENT_NAME": "production",
+  "PORT": 3000,
   "LOGGER_CATEGORY": "production",
   "TEST_DATABASE_NAME": "TEST_DB_PRO"
 }

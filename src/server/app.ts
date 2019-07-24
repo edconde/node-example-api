@@ -1,9 +1,13 @@
+import { ENVIRONMENT } from './environment';
+import * as swaggerUi from 'swagger-ui-express';
+import * as swaggerDocument from '../server/config/documentation/swagger.json';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import * as express from 'express';
 import { errorMiddleware } from './middleware';
 import { Routes } from './routes';
 import { AppLogger } from './logger';
+import { ENVIRONMENT_NAMES } from './environment';
 
 class App {
   private app: express.Application;
@@ -38,10 +42,19 @@ class App {
     // api routing
     this.app.use('/api', Routes.getRoutes());
 
+    // swagger endpoint
+    if (ENVIRONMENT['ENVIRONMENT_NAME'] === ENVIRONMENT_NAMES.DEVELOPMENT) {
+      this.initializeSwagger();
+    }
+
     // handle undefined routes
     this.app.use('*', (req, res, next) => {
       res.send('Make sure url is correct!!!');
     });
+  }
+
+  private initializeSwagger() {
+    this.app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
   }
 
   // start listening
@@ -52,4 +65,4 @@ class App {
   }
 }
 
-export default App;
+export { App };

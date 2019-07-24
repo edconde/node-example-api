@@ -1,5 +1,6 @@
 {
   "ENVIRONMENT_NAME": "development",
+  "PORT": 3000,
   "LOGGER_CATEGORY": "development",
   "TEST_DATABASE_NAME": "TEST_DB_DEV"
 }
