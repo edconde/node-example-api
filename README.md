@@ -4,7 +4,7 @@ Example of a nodejs api project with typescript
 
 ## Project
 
-This project intends to be a base for anothere bigger ones. It covers the basics and stablishes a clean arquitecture which features the following:
+This project intends to be a base for another bigger ones. It covers the basics and stablishes a clean arquitecture which features the following:
 
 - [x] Controllers
 - [x] App routing
